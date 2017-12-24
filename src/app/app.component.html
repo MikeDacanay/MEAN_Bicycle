@@ -1,0 +1,66 @@
+<div style='background-color: orange; height: 200px; width: 700px'>
+  {{ FormReg | json }}
+</div>
+<div style='display: inline-block;background-color: red; height: 200px; width: 343px'>
+</div>
+<div style='display: inline-block;background-color: grey; height: 900px; width: 343px'>
+  <h2> Registration</h2>
+  <form (submit)='onSubmit()' #FormReg="ngForm">
+    <div>
+      <p style='display: inline-block'>*First Name</p>
+        <input type='text'
+          name="firstName"
+          required
+          [(ngModel)]="user.first_name"
+          #firstName="ngModel"
+        />
+      <p *ngIf='firstName.errors' style='color:purple;'>First name is required</p>
+    </div>
+    <div>
+      <p style='display: inline-block'>*Last Name</p>
+        <input type='text'
+          name="lastName"
+          required
+          [(ngModel)]="user.last_name"
+          #lastName="ngModel"
+        />
+      <p *ngIf='lastName.errors' style='color:purple;'>Last name is required</p>
+    </div>    
+    <div>
+      <p style='display: inline-block'>Email</p>
+        <input type='text'
+          name="Email"
+          required 
+          pattern = "^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"  
+          [(ngModel)]="user.email"
+          #email="ngModel"        
+        />
+      <p *ngIf='email.errors' style='color:purple;'>Email must be valid</p>
+    </div>
+    <div>
+      <p style='display: inline-block'>Password</p>
+        <input type='text'
+          name="Pass"
+          required 
+          minlength="10"  
+          [(ngModel)]="user.password"
+          #Pass="ngModel"        
+        />
+        <p *ngIf='Pass.errors' style='color:purple;'>Password must be valid</p>
+    </div>
+    <div>
+      <p style='display: inline-block'>Password Confirmation</p>
+        <input type='text'
+          name="Confirmation"  
+          [(ngModel)]="user.confirm"
+          #Pass="ngModel"        
+        />
+        <p *ngIf='user.confirm != user.password' style='color:purple;'>Password must be valid</p>
+    </div>             
+    <input
+      type='submit' 
+      value='Register'
+      [disabled]="FormReg.form.invalid || user.confirm != user.password"
+    >
+  </form>
+</div>
